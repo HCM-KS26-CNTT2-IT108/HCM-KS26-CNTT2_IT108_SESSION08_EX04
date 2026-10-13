@@ -1,8 +1,8 @@
 PHẦN 1: SO SÁNH HAI TOÁN TỬ REDIRECTION (`>` VÀ `>>`)
 
 
-| Tiêu chí | Toán tử Ghi đè (`>`) | Toán tử Ghi nối tiếp (`>>`) |
-| :--- | :--- | :--- |
+| Tiêu chí          | Toán tử Ghi đè (`>`)                                                                    | Toán tử Ghi nối tiếp (`>>`) |
+|                   |                                                                                          |
 | Cơ chế hoạt động | Xóa toàn bộ nội dung cũ trong tệp (nếu tệp đã tồn tại) rồi ghi đè dữ liệu mới vào từ đầu. | Giữ nguyên nội dung cũ và bổ sung dữ liệu mới xuống các dòng tiếp theo ở cuối tệp. |
 | Rủi ro mất dữ liệu | Rất cao. Làm mất toàn bộ lịch sử dữ liệu đã tích lũy trước đó nếu vô tình thực thi nhầm trên tệp cũ. | Thấp. Bảo lưu trọn vẹn dữ liệu cũ, chỉ cộng dồn thêm thông tin mới phát sinh. |
 | Ngữ cảnh sử dụng | Dùng khi cần tạo mới báo cáo, thiết lập lại tệp log trắng từ đầu mỗi phiên chạy (Ca sáng/Làm mới). | Dùng cho hệ thống theo dõi 24/7 cần ghi nhận nhật ký liên tục theo giờ/ngày mà không làm gián đoạn lịch sử. |
