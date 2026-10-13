@@ -1,0 +1,21 @@
+PHẦN 1: SO SÁNH HAI TOÁN TỬ REDIRECTION (`>` VÀ `>>`)
+
+
+| Tiêu chí | Toán tử Ghi đè (`>`) | Toán tử Ghi nối tiếp (`>>`) |
+| :--- | :--- | :--- |
+| Cơ chế hoạt động | Xóa toàn bộ nội dung cũ trong tệp (nếu tệp đã tồn tại) rồi ghi đè dữ liệu mới vào từ đầu. | Giữ nguyên nội dung cũ và bổ sung dữ liệu mới xuống các dòng tiếp theo ở cuối tệp. |
+| Rủi ro mất dữ liệu | Rất cao. Làm mất toàn bộ lịch sử dữ liệu đã tích lũy trước đó nếu vô tình thực thi nhầm trên tệp cũ. | Thấp. Bảo lưu trọn vẹn dữ liệu cũ, chỉ cộng dồn thêm thông tin mới phát sinh. |
+| Ngữ cảnh sử dụng | Dùng khi cần tạo mới báo cáo, thiết lập lại tệp log trắng từ đầu mỗi phiên chạy (Ca sáng/Làm mới). | Dùng cho hệ thống theo dõi 24/7 cần ghi nhận nhật ký liên tục theo giờ/ngày mà không làm gián đoạn lịch sử. |
+| Encoding tệp đầu ra | Mặc định sử dụng bảng mã UTF-16 (khi đi qua `Out-File`). | Mặc định sử dụng bảng mã UTF-16 (khi đi qua `Out-File -Append`). |
+
+Giải đáp bẫy dữ liệu (Cuối tháng mất dữ liệu 30 ngày):** Nếu An dùng nhầm `>` thay vì `>>` vào cuối tháng, toàn bộ báo cáo lỗi đã tích lũy suốt 30 ngày trước đó sẽ bị lệnh `>` xóa sạch ngay lập tức do cơ chế ghi đè, chỉ để lại kết quả của đúng ngày cuối cùng đó.
+
+
+PHẦN 2: LỰA CHỌN & ĐỀ XUẤT GIẢI PHÁP TỐI ƯU
+
+1. Giải pháp tối ưu cho hệ thống ghi nhật ký lỗi liên tục trong ngày:
+- Nên sử dụng lệnh kết hợp `Out-File -Append` hoặc cmdlet chuyên dụng `Add-Content` kèm theo chỉ định rõ ràng bảng mã UTF-8 để tránh lỗi font chữ tiếng Việt
+
+2. Mẫu câu lệnh chuẩn đề xuất:
+```powershell
+Get-Content server.log | Select-String "ERROR" | Add-Content -Path daily_report.txt -Encoding utf8
